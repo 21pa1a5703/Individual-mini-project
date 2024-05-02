@@ -1,0 +1,125 @@
+//html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Grade Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Student Grade Calculator</h1>
+    <label for="numSubjects">Enter the number of subjects:</label>
+    <input type="number" id="numSubjects">
+    <button onclick="calculateGrades()">Calculate</button>
+    <div id="results"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
+
+//css
+* {
+box-sizing: border-box;
+}
+body {
+background-color: #f2f2f2;
+padding: 50px;
+font-family: "Helvetica", sans-serif;
+}
+.container {
+background-color: white;
+max-width: 600px;
+
+margin: 100px auto;
+padding: 20px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+border-radius: 10px;
+}
+h1 {
+margin-top: 0;
+text-align: center;
+}
+input {
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+margin: 10px 0;
+width: 100%;
+}
+button {
+background-color: #4caf50;
+color: white;
+padding: 10px;
+border: none;
+cursor: pointer;
+margin: 10px 0;
+width: 100%;
+font-size: 18px;
+text-transform: uppercase;
+transition: background-color 0.2s ease;
+border-radius: 10px;
+}
+button:hover
+{
+background-color: #45a049;
+}
+#total
+{
+font-size: 24px;
+font-weight: bold;
+margin-top: 10px;
+}
+label
+{
+font-size: large;
+}
+p{
+font-size: larger;
+}
+
+//js
+function calculateGrades() {
+    var numSubjects = parseInt(document.getElementById('numSubjects').value);
+    var totalMarks = 0;
+
+    if (numSubjects <= 0 || isNaN(numSubjects)) {
+        document.getElementById('results').innerHTML = "Invalid number of subjects. Please enter a positive integer.";
+        return;
+    }
+
+    for (var i = 1; i <= numSubjects; i++) {
+        var marks = parseInt(prompt("Enter marks for Subject " + i + " (out of 100):"));
+
+        if (marks < 0 || marks > 100 || isNaN(marks)) {
+            document.getElementById('results').innerHTML = "Invalid marks. Please enter a value between 0 and 100.";
+            return;
+        }
+
+        totalMarks += marks;
+    }
+
+    var averagePercentage = totalMarks / numSubjects;
+
+    var grade = calculateGrade(averagePercentage);
+
+    document.getElementById('results').innerHTML = "<p>Results:</p>" +
+        "<p>Total Marks: " + totalMarks + "</p>" +
+        "<p>Average Percentage: " + averagePercentage.toFixed(2) + "%</p>" +
+        "<p>Grade: " + grade + "</p>";
+}
+
+function calculateGrade(averagePercentage) {
+    if (averagePercentage >= 90) {
+        return 'A';
+    } else if (averagePercentage >= 80) {
+        return 'B';
+    } else if (averagePercentage >= 70) {
+        return 'C';
+    } else if (averagePercentage >= 60) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
